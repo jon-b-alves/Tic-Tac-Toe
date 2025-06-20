@@ -1,4 +1,5 @@
 #include <stdio.h>
+#define PLAYER1_TURN 0
 
 enum Mark { EMPTY = 0, O = 1, X = 2 };
 
@@ -9,9 +10,28 @@ enum Mark board[3][3] = {
 };
 
 /* TODO 
- * print_board()
  * validate_board()
 */
+
+void print_board() {
+    for (int row = 0; row <= 2; row++) {
+        putchar('|');
+        for (int col = 0; col <= 2; col++) {
+            //printf("%d|", board[row][col]);
+            if (board[row][col] == EMPTY) {
+                printf(" |");
+            }
+            else if (board[row][col] == O) {
+                printf("O|");
+            }
+            else {
+                printf("X|");
+            }
+        }
+        putchar('\n');
+    }
+    putchar('\n');
+}
 
 int main() {
     printf("\nplayer1 goes first and will use O's\nplayer2 will go second and will use X's\nenter the position where you will like to mark on the board using 1-9\n\n|1|2|3|\n|4|5|6|\n|7|8|9|\n\n");
@@ -40,16 +60,19 @@ int main() {
         }
 
         if (board[row][col] != EMPTY) {
-            printf("cell already marked\n");
+            printf("[cell already marked]\n\n");
             continue;
         }
 
-        if (turn == 0) {
+        if (turn == PLAYER1_TURN) {
             board[row][col] = O;
         }
+
         else {
             board[row][col] = X;
         }
+        
+        print_board();
 
         turn = 1 - turn;
     }
