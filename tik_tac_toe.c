@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #define PLAYER1_TURN 0
 
 enum Mark { EMPTY = 0, O = 1, X = 2 };
@@ -31,6 +32,57 @@ void print_board() {
         putchar('\n');
     }
     putchar('\n');
+}
+
+
+void validate_board() {
+    if (
+        // validating rows for player1
+        board[0][0] == O && board[0][1] == O && board[0][2] == O ||
+        board[1][0] == O && board[1][1] == O && board[1][2] == O ||
+        board[2][0] == O && board[2][1] == O && board[2][2] == O ||
+
+        // validating columns for player1
+        board[0][0] == O && board[1][0] == O && board[2][0] == O ||
+        board[0][1] == O && board[1][1] == O && board[2][1] == O ||
+        board[0][2] == O && board[1][2] == O && board[2][2] == O ||
+
+        // validating diagonals for player1
+        board[0][0] == O && board[1][1] == O && board[2][2] == O ||
+        board[0][2] == O && board[1][1] == O && board[2][0] == O
+    ) {
+        printf("[player1 wins]\n");
+        exit(0);
+    }
+
+    if (
+        // validating rows for player2
+        board[0][0] == X && board[0][1] == X && board[0][2] == X ||
+        board[1][0] == X && board[1][1] == X && board[1][2] == X ||
+        board[2][0] == X && board[2][1] == X && board[2][2] == X ||
+
+        // validating columns for player2
+        board[0][0] == X && board[1][0] == X && board[2][0] == X ||
+        board[0][1] == X && board[1][1] == X && board[2][1] == X ||
+        board[0][2] == X && board[1][2] == X && board[2][2] == X ||
+
+        // validating diagonals for player2
+        board[0][0] == X && board[1][1] == X && board[2][2] == X ||
+        board[0][2] == X && board[1][1] == X && board[2][0] == X
+    ) {
+        printf("[player2 wins]\n");
+        exit(0);
+    }
+
+    if (
+        // validating if game ended in a draw
+        board[0][0] != EMPTY && board[0][1] != EMPTY && board[0][2] != EMPTY &&
+        board[1][0] != EMPTY && board[1][1] != EMPTY && board[1][2] != EMPTY &&
+        board[2][0] != EMPTY && board[2][1] != EMPTY && board[2][2] != EMPTY
+    ) {
+        printf("[draw]\n");
+        exit(0);
+    }
 }
 
 int main() {
@@ -73,6 +125,7 @@ int main() {
         }
         
         print_board();
+        validate_board();
 
         turn = 1 - turn;
     }
